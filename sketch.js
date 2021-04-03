@@ -1,6 +1,7 @@
 const Engine = Matter.Engine;
 const World= Matter.World;
 const Bodies = Matter.Bodies;
+const Constraint=Matter.Constraint;
 
 var engine, world;
 var box1, pig1;
@@ -35,6 +36,20 @@ function setup(){
     log5 = new Log(870,120,150, -PI/7);
 
     bird = new Bird(100,100);
+constlog=new Log(230,180,80,PI/2);
+
+var options={
+bodyA:bird.body,
+bodyB:constlog.body,
+stiffness:0.4,//bounciness-if i increase it is becoming a hard object
+length:100//resting distance
+
+
+}
+
+
+var chain=Constraint.create(options);
+World.add(world,chain);
 
 }
 
@@ -61,4 +76,7 @@ function draw(){
 
     bird.display();
     platform.display();
+    constlog.display();
+    strokeWeight(4)
+    line(bird.body.position.x,bird.body.position.y,constlog.body.position.x,constlog.body.position.y)
 }
